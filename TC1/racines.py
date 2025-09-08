@@ -11,27 +11,3 @@ def trinome(a,b,c):
         return (1, (-b/(2*a)))
 if __name__ == "__main__":
     print(trinome(3,-2,-1))
-    
-min=max=0
-val = input("donner le premier entier")
-try:
-    val = int(val)
-    min=max=val
-except ValueError:
-    print("On a demandé un entier...")
-
-while True:
-    try:
-        val = input("donner un entier")
-        val = int(val)
-        if val < min:
-            min = val
-        if val > max:
-            max = val
-    except ValueError:
-        print("Bah alors ?")
-        exit(0)
-    except EOFError:
-        print("c'est fini : min =",min," max = ",max,)
-        break
-input("?")
