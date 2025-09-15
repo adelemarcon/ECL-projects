@@ -2,6 +2,8 @@ class Forme():
     def __init__(self,x,y):
         self.__x = x
         self.__y = y
+        
+        self.__dessin = []
     def get_x(self):
         return self.__x
     def get_y(self):
@@ -12,6 +14,10 @@ class Forme():
     def translation(self,dx,dy):
         self.__x += dx
         self.__y += dy
+    def add_dessin(self,d):
+        self.__dessin.append(d)
+    def del_dessin(self,d):
+        self.__dessin.remove(d)
     
 
 class Rectangle(Forme):
@@ -20,7 +26,7 @@ class Rectangle(Forme):
         self.__l = l
         self.__h = h
     def __str__(self):
-        return "Largeur: " + str(self.__l) + " Hauteur: " + str(self.__h)
+        return "Largeur: {}, Hauteur: {}".format(self.__l,self.__h)
     def get_dim(self):
         return (self.__l, self.__h)
     def set_dim(self,l,h):
@@ -44,7 +50,7 @@ class Ellipse(Forme):
         self.__rx = rx
         self.__ry = ry
     def __str__(self):
-        return "Rayon x: " + str(self.__rx) + " Rayon y: " + str(self.__ry)
+        return "Rayon x: {}, Rayon y: {}".format(self.__rx,self.__ry)
     def get_dim(self):
         return (self.__rx, self.__ry)
     def set_dim(self,rx,ry):
@@ -69,7 +75,7 @@ class Cercle(Forme):
         Forme.__init__(self,x,y)
         self.__r = r
     def __str__(self):
-        return "Rayon: " + str(self.__r)
+        return "Rayon: {r}".format(self.__r)
     def get_dim(self):
         return self.__r
     def contient_point(self,x,y):
@@ -89,6 +95,17 @@ if __name__ == '__main__':
     R.contient_point(1,3)
     print(str(R))
 
-class Dessin(Forme):
-    def __init__(self,x,y):
-        Forme.__init__(self,x,y)
+class Dessin:
+    def __init__(self,n):
+        self.__formes = []
+        self.__nom = n
+    def get_nom(self):
+        return self.__nom
+    def add_forme(self,f):
+        self.__formes.append(f)
+    def get_forme(self,n):
+        for f in self.__formes:
+            if f.get_nom() == n:
+                return n
+    def del_forme(self,f):
+        self.__formes.remove(f)
