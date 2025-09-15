@@ -8,6 +8,15 @@ def test_Rectangle():
     r.redimension_par_points(100, 200, 1100, 700)
     assert r.contient_point(500, 500)
     assert not r.contient_point(50, 50)
+    
+def test_Cercle():
+    c = Cercle(10, 20, 30)
+    str(c)
+    assert c.contient_point(0, 0)
+    assert not c.contient_point(-19, -9)
+    c.redimension_par_points(100, 200, 1100, 700)
+    assert c.contient_point(500, 500)
+    assert not c.contient_point(599, 500)
 
 def test_Ellipse():
     e = Ellipse(60, 45, 50, 25)
@@ -17,15 +26,6 @@ def test_Ellipse():
     e.redimension_par_points(100, 200, 1100, 700)
     assert e.contient_point(500, 500)
     assert not e.contient_point(101, 201)
-
-def test_Cercle():
-    c = Cercle(10, 20, 30)
-    str(c)
-    assert c.contient_point(0, 0)
-    assert not c.contient_point(-19, -9)
-    c.redimension_par_points(100, 200, 1100, 700)
-    assert c.contient_point(500, 500)
-    assert not c.contient_point(599, 500)
 
 if __name__ == '__main__':
     test_Rectangle()
