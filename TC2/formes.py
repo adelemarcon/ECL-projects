@@ -1,4 +1,4 @@
-class Forme:
+class Forme():
     def __init__(self,x,y):
         self.__x = x
         self.__y = y
@@ -19,6 +19,8 @@ class Rectangle(Forme):
         Forme.__init__(self,x,y)
         self.__l = l
         self.__h = h
+    def __str__(self):
+        return "Largeur: " + str(self.__l) + " Hauteur: " + str(self.__h)
     def get_dim(self):
         return (self.__l, self.__h)
     def set_dim(self,l,h):
@@ -41,20 +43,24 @@ class Ellipse(Forme):
         Forme.__init__(self,x,y)
         self.__rx = rx
         self.__ry = ry
+    def __str__(self):
+        return "Rayon x: " + str(self.__rx) + " Rayon y: " + str(self.__ry)
     def get_dim(self):
         return (self.__rx, self.__ry)
     def set_dim(self,rx,ry):
         self.__rx = rx
         self.__ry = ry
     def contient_point(self,x,y):
-        if (x-self.get_x())**2 + (y-self.get_y())**2 <= self.__rx**2 + self.__ry**2:
+        a = ((x - self.get_x())/self.__rx)**2
+        b = ((y - self.get_y())/self.__ry)**2
+        if a+ b <= 1:
             print ("Oui! ellipse")
             return True
         else:
             print("Non")
             return False
     def redimension_par_points(self,x0,y0,x1,y1):
-        self.set(((x1 - x0) / 2) + x0,((y1 - y0) / 2) + y0)
+        self.set_pos(((x1 - x0) / 2) + x0,((y1 - y0) / 2) + y0)
         self.__rx = (abs(x1-x0))/2
         self.__ry = (abs(y1-y0))/2
 
@@ -62,6 +68,8 @@ class Cercle(Forme):
     def __init__(self,x,y,r):
         Forme.__init__(self,x,y)
         self.__r = r
+    def __str__(self):
+        return "Rayon: " + str(self.__r)
     def get_dim(self):
         return self.__r
     def contient_point(self,x,y):
@@ -79,3 +87,8 @@ class Cercle(Forme):
 if __name__ == '__main__':
     R = Rectangle(2,3,4,5)
     R.contient_point(1,3)
+    print(str(R))
+
+class Dessin(Forme):
+    def __init__(self,x,y):
+        Forme.__init__(self,x,y)
