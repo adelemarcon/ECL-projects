@@ -19,4 +19,19 @@ class Bibliotheque():
     def del_lecteur(self,nLe):
         if get_emprunt(nLe) == 0:
             self.__lecteurs.remove(nLe)
-    
+    def chercher_lecteur_nom(self,n):
+        for k in self.__lecteurs:
+            if k.get_nom() == n:
+                return k
+    def chercher_lecteur_num(self,num):
+        for k in self.__lecteurs:
+            if k.get_num() == num:
+                return k
+    def chercher_livre_titre(self,t):
+        for k in self.__livres:
+            if k.get_titre() == t:
+                return k
+    def chercher_livre_num(self,num):
+        for k in self.__livres:
+            if k.get_num() == num:
+                return k
