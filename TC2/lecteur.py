@@ -1,8 +1,11 @@
+from personne import Personne
 class Lecteur(Personne):
     def __init__(self,n,p,a,nb):
         Personne.__init__(self,n,p,a)
         self.__nb = nb
         self.__nbemprunts = []
+    def __str__(self):
+        return "Nom: {}, Prénom: {}, Adresse:{}, Numéro:{}".f(self.get_nom(),self.get_prenom(),self.get_adresse(),self.__nb)
     def get_num(self):
         return self.__nb
     def set_numero(self,nb):

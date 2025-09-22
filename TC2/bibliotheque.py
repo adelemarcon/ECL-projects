@@ -27,7 +27,7 @@ class Bibliotheque():
         for k in self.__lecteurs:
             if k[0] == n:
                 return k
-    def chercher_lecteur_num(self,num):
+    def chercher_lecteur_numero(self,num):
         for k in self.__lecteurs:
             if k[3] == num:
                 return k
@@ -35,7 +35,7 @@ class Bibliotheque():
         for k in self.__livres:
             if k[1] == t:
                 return k
-    def chercher_livre_num(self,num):
+    def chercher_livre_numero(self,num):
         for k in self.__livres:
             if k[3] == num:
                 return k
@@ -46,3 +46,7 @@ class Bibliotheque():
                 n = False
         if n:
             self.__emprunt.append([n_lecteur,n_livre])
+    def affiche_lecteurs(self):
+        return self.__lecteurs
+    def affiche_livres(self):
+        return self.__livres
