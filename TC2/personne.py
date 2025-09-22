@@ -1,5 +1,5 @@
 class Personne():
-    def __init__(self,n,p,a,nb):
+    def __init__(self,n,p,a):
         self.__n = n
         self.__p = p
         self.__a = a

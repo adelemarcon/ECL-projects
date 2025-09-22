@@ -1,9 +1,12 @@
+from datetime import date
 class Emprunt():
-    def __init__(self,d,numL,numLi):
-        self.__d = d
+    def __init__(self,numL,numLi):
         self.__numlecteur = numL
         self.__numlivre = numLi
-    def get_numerolecteur(self):
+        self.__date = date.isoformat(date.today())
+    def get_numero_lecteur(self):
         return self.__numlecteur
-    def get_numerolivre(self):
+    def get_numero_livre(self):
         return self.__numlivre
+    def get_date(self):
+        return self.__date
