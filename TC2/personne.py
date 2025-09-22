@@ -1,4 +1,4 @@
-class Lecteur(Personne):
+class Personne():
     def __init__(self,n,p,a,nb):
         self.__n = n
         self.__p = p
