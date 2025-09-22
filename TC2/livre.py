@@ -1,12 +1,12 @@
 class Livre():
-    def __init__(self,a,t,num,nb):
+    def __init__(self,t,a,num,nb):
         self.__a = a
         self.__t = t
         self.__num = num
         self.__nb = nb
         self.__nbdispo = nb
-    def __str__(self):
-        return "Auteur: {}, Titre: {}, Numéro: {}, Nombre acheté: {}, Nombre dispo: {}".format(self.__a,self.__t,self.__num, self.__nb,self.__nbdispo)
+    def affiche_livre(self):
+        print( "Auteur: {}, Titre: {}, Numéro: {}, Nombre acheté: {}, Nombre dispo: {}".format(self.__a,self.__t,self.__num, self.__nb,self.__nbdispo))
     def get_titre(self):
         return self.__t
     def set_titre(self,t):

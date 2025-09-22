@@ -4,8 +4,8 @@ class Lecteur(Personne):
         Personne.__init__(self,n,p,a)
         self.__nb = nb
         self.__nbemprunts = 0
-    def __str__(self):
-        return "Nom: {}, Prénom: {}, Adresse:{}, Numéro:{}".format(self.get_nom(),self.get_prenom(),self.get_adresse(),self.__nb)
+    def affiche_lecteur(self):
+        print( "Nom: {}, Prénom: {}, Adresse:{}, Numéro:{}".format(self.get_nom(),self.get_prenom(),self.get_adresse(),self.__nb))
     def get_numero(self):
         return self.__nb
     def set_numero(self,nb):
