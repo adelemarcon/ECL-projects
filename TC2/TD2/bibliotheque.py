@@ -65,6 +65,12 @@ class Bibliotheque():
             if k.get_numero() == num:
                 return k
         return None
+    def chercher_emprunt(self,n_lecteur,n_livre):
+        for k in self.__emprunts:
+            if k.get_numero_lecteur() == n_lecteur and k.get_numero_livre() == n_livre:
+                return k
+        return None
+        
     def emprunt_livre(self,n_lecteur,n_livre):
        liv = self.chercher_livre_numero(n_livre)
        if liv == None:
@@ -93,7 +99,8 @@ class Bibliotheque():
         self.__emprunts.remov(e)
         liv = self.chercher_livre_numero(n_livre)
         if liv != None: 
-            liv.set_nb_dispo(liv.get_nb_dispo()+1)                
+            liv.set_nb_dispo(liv.get_nb_dispo()+1)  
+        return True              
                 
     def affiche_lecteurs(self):
         for k in self.__lecteurs:

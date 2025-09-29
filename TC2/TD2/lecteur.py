@@ -1,4 +1,4 @@
-from personne import Personne
+from personne import *
 class Lecteur(Personne):
     def __init__(self,n,p,a,nb):
         Personne.__init__(self,n,p,a)
