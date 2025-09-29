@@ -5,8 +5,8 @@ class Livre():
         self.__num = num
         self.__nb = nb
         self.__nbdispo = nb
-    def affiche_livre(self):
-        print( "Auteur: {}, Titre: {}, Numéro: {}, Nombre acheté: {}, Nombre dispo: {}".format(self.__a,self.__t,self.__num, self.__nb,self.__nbdispo))
+    def __str__(self):
+        return( "Auteur: {}, Titre: {}, Numéro: {}, Nombre acheté: {}, Nombre dispo: {}".format(self.__a,self.__t,self.__num, self.__nb,self.__nbdispo))
     def get_titre(self):
         return self.__t
     def set_titre(self,t):

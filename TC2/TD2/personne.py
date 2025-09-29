@@ -4,7 +4,7 @@ class Personne():
         self.__p = p
         self.__a = a
     def __str__(self):
-        print("Nom: {}, Prénom: {}, Adresse: {}".format(self.__n,self.__p,self.a))
+        print("Nom: {}, Prénom: {}, Adresse: {}".format(self.__n,self.__p,self.__a))
     def get_nom(self):
         return self.__n
     def set_nom(self,n):

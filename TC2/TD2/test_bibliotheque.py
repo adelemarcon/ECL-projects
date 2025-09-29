@@ -5,8 +5,9 @@
 
 from bibliotheque import *
 
-# Creation d'une bibliotheque
+# Creation d'une bibliotheque et de son conservateur
 b = Bibliotheque('Bibliotheque ECL')
+b.set_conservateur('Vivier','Merlin','rue des Papillons')
 
 # Ajout de lecteurs
 b.ajout_lecteur('Duval','Pierre','rue de la Paix',1)
@@ -19,6 +20,11 @@ b.ajout_livre('Le Pere Goriot','Honore de Balzac',101,2)
 b.ajout_livre('Les Hauts de Hurlevent','Emilie Bronte',102,2)
 b.ajout_livre('Le Petit Prince','Antoine de Saint Exupery',103,2)
 b.ajout_livre('L\'Etranger','Albert Camus',104,2)
+
+# Ajout de ibliothécaires
+
+b.ajout_bibliothecaire('Duval','Marion','rue des Hirondelles',1)
+b.ajout_bibliothecaire('Desjardins','Anne','rue Sainte-Adèle',2)
 
 # Affichage des lecteurs et des livres
 print('\n--- Liste des lecteurs :')
@@ -83,6 +89,35 @@ if livre != None:
     print('Livre trouve :',livre)
 else:
     print('Livre non trouve')
+    
+# Recherches de bibliothécaires par numero
+
+print('\n--- Recherche de bibliothécaires :')
+print('-------------------------------')
+biblio = b.chercher_bibliothecaire_numero(1)
+if biblio != None:
+    print(biblio)
+else:
+    print('Bibliothécaire non trouve')
+
+biblio = b.chercher_lecteur_numero(96)
+if biblio != None:
+    print(biblio)
+else:
+    print('Bibliothécaire non trouve')
+
+# Recherche de Bibliothécaires par nom
+biblio = b.chercher_bibliothecaire_nom('Desjardins','Anne')
+if biblio != None:
+    print(biblio)
+else:
+    print('Bibliothécaire non trouve')
+
+biblio = b.chercher_lecteur_nom('Pierre','Caillou')
+if biblio != None:
+    print(biblio)
+else:
+    print('Bibliothécaire non trouve')
 
 # Quelques emprunts
 print('\n--- Quelques emprunts :')
