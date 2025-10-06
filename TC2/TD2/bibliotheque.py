@@ -1,9 +1,3 @@
-from emprunt import *
-from livre import *
-from lecteur import *
-from conservateur import *
-from bibliothecaire import *
-
 class Bibliotheque():
     def __init__(self,n):
         self.__n = n
@@ -159,3 +153,111 @@ class Bibliotheque():
     def set_conservateur(self,nom,prenom,adresse):
         c = Conservateur(nom,prenom,adresse)
         self.__conservateur = c
+        
+
+class Personne():
+    def __init__(self,n,p,a):
+        self.__n = n
+        self.__p = p
+        self.__a = a
+    def __str__(self):
+        print("Nom: {}, Prénom: {}, Adresse: {}".format(self.__n,self.__p,self.__a))
+    def get_nom(self):
+        return self.__n
+    def set_nom(self,n):
+        self.__n = n
+    def get_prenom(self):
+        return self.__p
+    def set_prenom(self,p):
+        self.__p = p
+    def get_adresse(self):
+        return self.__a
+    def set_adresse(self,a):
+        self.__a = a
+
+
+class Bibliothecaire(Personne):
+    def __init__(self,n,p,a,num):
+        Personne.__init__(self,n,p,a)
+        self.__num = num
+    def __str__(self):
+        return( "Nom: {}, Prénom: {}, Adresse:{}, Numéro:{}".format(self.get_nom(),self.get_prenom(),self.get_adresse(),self.__num))
+    def get_numero(self):
+        return self.__num
+    def set_numero(self,num):
+        self.__num = num
+
+class Conservateur(Personne):
+    def __init__(self,n,p,a):
+        Personne.__init__(self,n,p,a)
+        self.__bibliotheque = None
+    def __str__(self):
+        return( "Nom: {}, Prénom: {}, Adresse:{}".format(self.get_nom(),self.get_prenom(),self.get_adresse()))
+    def get_biblio(self):
+        return self.__bibliotheque
+    def set_bibliotheque(self,biblio):
+        self.__bibliotheque = biblio
+
+class Lecteur(Personne):
+    def __init__(self,n,p,a,nb):
+        Personne.__init__(self,n,p,a)
+        self.__nb = nb
+        self.__nbemprunts = 0
+    def __str__(self):
+        return( "Nom: {}, Prénom: {}, Adresse:{}, Numéro:{}".format(self.get_nom(),self.get_prenom(),self.get_adresse(),self.__nb))
+    def get_numero(self):
+        return self.__nb
+    def set_numero(self,nb):
+        self.__nb = nb
+    def get_nb_emprunts(self):
+        return self.__nbemprunts
+    def set_nb_emprunts(self,nb):
+        self.__nbemprunts = nb
+
+from datetime import date
+class Emprunt():
+    def __init__(self,numL,numLi,numBiblio):
+        self.__numlecteur = numL
+        self.__numlivre = numLi
+        self.__numBiblio = numBiblio
+        self.__date = date.isoformat(date.today())
+    def __str__(self):
+        return ("Lect: {}, Livre: {}, Bibliothécaire: {},date: {}".format(self.__numlecteur,self.__numlivre,self.__numBiblio,self.__date))
+    def get_numero_lecteur(self):
+        return self.__numlecteur
+    def get_numero_livre(self):
+        return self.__numlivre
+    def get_date(self):
+        return self.__date
+    def get_numero_bibliothecaire(self):
+        return self.__numBiblio
+
+class Livre():
+    def __init__(self,t,a,num,nb):
+        self.__a = a
+        self.__t = t
+        self.__num = num
+        self.__nb = nb
+        self.__nbdispo = nb
+    def __str__(self):
+        return( "Auteur: {}, Titre: {}, Numéro: {}, Nombre acheté: {}, Nombre dispo: {}".format(self.__a,self.__t,self.__num, self.__nb,self.__nbdispo))
+    def get_titre(self):
+        return self.__t
+    def set_titre(self,t):
+        self.__t = t
+    def get_auteur(self):
+        return self.__a
+    def set_auteur(self,a):
+        self.__a = a
+    def get_numero(self):
+        return self.__num
+    def set_numero(self,num):
+        self.__num = num
+    def get_nb_total(self):
+        return self.__nb
+    def set_nb_total(self,n):
+        self.__nb = n
+    def get_nb_dispo(self):
+        return self.__nbdispo
+    def set_nb_dispo(self,nb):
+        self.__nbdispo = nb

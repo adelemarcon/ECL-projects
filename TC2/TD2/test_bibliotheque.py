@@ -1,8 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-@author: dellandrea
-"""
-
 from bibliotheque import *
 
 # Creation d'une bibliotheque et de son conservateur
@@ -107,7 +102,7 @@ biblio = b.chercher_lecteur_numero(96)
 if biblio != None:
     print(biblio)
 else:
-    print('Bibliothécaire non trouve')
+    print('Bibliothécaire non trouvé')
 
 # Recherche de Bibliothécaires par nom
 biblio = b.chercher_bibliothecaire_nom('Desjardins','Anne')
