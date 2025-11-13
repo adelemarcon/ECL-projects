@@ -1,0 +1,119 @@
+%% 
+clear all;
+close all;
+clc;
+
+n = 2;
+lambda1 = 0.001
+lambda2 = 1
+lambda3 = 10
+b = 1
+w11 = 0;
+w12 = 1;
+w21 = 1;
+w22 = 0;
+W = [w11, w12 ; w21, w22];
+B = [0.5; 0.5];
+
+Phi1 =  @(x) max(0,x);
+Phi21 = @(x) 1 ./ (1 + exp(-b*x));
+Phi22 = @(x) 1 ./ (1 + exp(-b*x));
+Phi23 = @(x) 1 ./ (1 + exp(-b*x));
+
+
+ed1 = @(t1, s1) -lambda1 * s1 + Phi21(W * s1 + B);
+ed2 = @(t2, s2) -lambda2 * s2 + Phi22(W * s2 + B);
+ed3 = @(t3, s3) -lambda3 * s3 + Phi23(W * s3 + B);
+s0 = [0 ; 10]
+tspan = [0 1]
+
+[t1, s1] = ode45(ed1, tspan, s0);
+[t2, s2] = ode45(ed2, tspan, s0);
+[t3, s3] = ode45(ed3, tspan, s0);
+
+figure('Position', [100 100 1400 500]);
+
+% Graphique 1
+subplot(1, 3, 1);
+plot(t1, s1, 'LineWidth', 2);
+xlabel('Temps (t)', 'FontSize', 12);
+ylabel('États s_i(t)', 'FontSize', 12);
+grid on;
+legend('s_1(t)', 's_2(t)', 'Location', 'best', 'FontSize', 11);
+
+% Graphique 2
+subplot(1, 3, 2);
+plot(t2, s2, 'LineWidth', 2);
+xlabel('Temps (t)', 'FontSize', 12);
+ylabel('États s_i(t)', 'FontSize', 12);
+grid on;
+legend('s_1(t)', 's_2(t)', 'Location', 'best', 'FontSize', 11);
+
+
+% Graphique 3
+subplot(1, 3, 3);
+plot(t3, s3, 'LineWidth', 2);
+xlabel('Temps (t)', 'FontSize', 12);
+ylabel('États s_i(t)', 'FontSize', 12);
+grid on;
+legend('s_1(t)', 's_2(t)', 'Location', 'best', 'FontSize', 11);
+
+%% 
+clear all;
+close all;
+clc;
+
+n = 2;
+lambda1 = 0.001
+lambda2 = 1
+lambda3 = 10
+b = 1
+w11 = 0;
+w12 = 1;
+w21 = 1;
+w22 = 0;
+W = [w11, w12 ; w21, w22];
+B = [0.5; 0.5];
+
+Phi1 =  @(x) max(0,x);
+Phi21 = @(x) 1 ./ (1 + exp(-b*x));
+Phi22 = @(x) 1 ./ (1 + exp(-b*x));
+Phi23 = @(x) 1 ./ (1 + exp(-b*x));
+
+
+ed1 = @(t1, s1) -lambda1 * s1 + Phi21(W * s1 + B);
+ed2 = @(t2, s2) -lambda2 * s2 + Phi22(W * s2 + B);
+ed3 = @(t3, s3) -lambda3 * s3 + Phi23(W * s3 + B);
+s0 = [0 ; 10]
+tspan = [0 10]
+
+[t1, s1] = ode45(ed1, tspan, s0);
+[t2, s2] = ode45(ed2, tspan, s0);
+[t3, s3] = ode45(ed3, tspan, s0);
+
+figure('Position', [100 100 1400 500]);
+
+% Graphique 1
+subplot(1, 3, 1);
+plot(t1, s1, 'LineWidth', 2);
+xlabel('Temps (t)', 'FontSize', 12);
+ylabel('États s_i(t)', 'FontSize', 12);
+grid on;
+legend('s_1(t)', 's_2(t)', 'Location', 'best', 'FontSize', 11);
+
+% Graphique 2
+subplot(1, 3, 2);
+plot(t2, s2, 'LineWidth', 2);
+xlabel('Temps (t)', 'FontSize', 12);
+ylabel('États s_i(t)', 'FontSize', 12);
+grid on;
+legend('s_1(t)', 's_2(t)', 'Location', 'best', 'FontSize', 11);
+
+
+% Graphique 3
+subplot(1, 3, 3);
+plot(t3, s3, 'LineWidth', 2);
+xlabel('Temps (t)', 'FontSize', 12);
+ylabel('États s_i(t)', 'FontSize', 12);
+grid on;
+legend('s_1(t)', 's_2(t)', 'Location', 'best', 'FontSize', 11);
