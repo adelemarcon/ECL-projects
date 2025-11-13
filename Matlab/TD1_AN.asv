@@ -1,0 +1,28 @@
+clear all;
+close all;
+clc;
+
+d = 10
+alpha = 1e-2
+max_iter = 10000
+
+b = ones(d, 1)
+A = 
+X0 = ones(d,0)
+
+X_history = zeros(d, max_iter + 1);
+X_history(:, 1) = X0;
+
+for n = 1:max_iter
+    % Équation: X^(n+1) = X^(n) - α(AX^(n) - b)
+    X_new = X - alpha * (A * X - b);
+    
+    % Sauvegarde
+    X_history(:, n + 1) = X_new;
+    
+    % Affichage périodique
+    if mod(n, 10) == 0 || n == 1
+        fprintf('%d\t\t\t%.6f\n', n, norm(X_new));
+    end
+    X = X_new;
+end
