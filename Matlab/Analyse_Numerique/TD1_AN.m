@@ -28,25 +28,4 @@ clear all;
 close all;
 clc;
 
-A = [2, -1, 0; -1,2,1; 0, -1, 2];
-B = [0,3,-1;4,-1,-1;-4,3,3];
-C = B*B;
-x=rand(3,1);
-
-for i=1:20
-    y=C*x;
-    x=y/norm(y);
-    m=median(C*x./x);
-end
-
-v1 = [-1,sqrt(2),-1]';
-u1 = v1';
-lambda = 2 + sqrt(2);
-
-A1 = A - lambda*v1*u1./u1*v1;
-
-for i=1:20
-    y=A1*x;
-    x=y/norm(y);
-    m=median(A1*x./x);
-end
+A = [2, -1, 0; -1,2,1; 0, -1, 2]
