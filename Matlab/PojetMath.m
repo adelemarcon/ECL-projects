@@ -25,7 +25,7 @@ ed1 = @(t1, s1) -lambda1 * s1 + Phi21(W * s1 + B);
 ed2 = @(t2, s2) -lambda2 * s2 + Phi22(W * s2 + B);
 ed3 = @(t3, s3) -lambda3 * s3 + Phi23(W * s3 + B);
 s0 = [0 ; 10]
-tspan = [0 1]
+tspan = [0 100]
 
 [t1, s1] = ode45(ed1, tspan, s0);
 [t2, s2] = ode45(ed2, tspan, s0);
@@ -76,16 +76,12 @@ W = [w11, w12 ; w21, w22];
 B = [0.5; 0.5];
 
 Phi1 =  @(x) max(0,x);
-Phi21 = @(x) 1 ./ (1 + exp(-b*x));
-Phi22 = @(x) 1 ./ (1 + exp(-b*x));
-Phi23 = @(x) 1 ./ (1 + exp(-b*x));
 
-
-ed1 = @(t1, s1) -lambda1 * s1 + Phi21(W * s1 + B);
-ed2 = @(t2, s2) -lambda2 * s2 + Phi22(W * s2 + B);
-ed3 = @(t3, s3) -lambda3 * s3 + Phi23(W * s3 + B);
+ed1 = @(t1, s1) -lambda1 * s1 + Phi1(W * s1 + B);
+ed2 = @(t2, s2) -lambda2 * s2 + Phi1(W * s2 + B);
+ed3 = @(t3, s3) -lambda3 * s3 + Phi1(W * s3 + B);
 s0 = [0 ; 10]
-tspan = [0 10]
+tspan = [0 2]
 
 [t1, s1] = ode45(ed1, tspan, s0);
 [t2, s2] = ode45(ed2, tspan, s0);
