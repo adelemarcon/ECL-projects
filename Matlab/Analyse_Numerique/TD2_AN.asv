@@ -25,7 +25,5 @@ w = V\y
 a
 b
 f
-N = logspace(___)
+N = ogs
 IN = h*sum(f(t))
-
-loglog(N,E)
