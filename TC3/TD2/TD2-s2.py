@@ -15,7 +15,7 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
   """"Classe dérivée pour traiter les requêtes entrantes du serveur"""
 
   # sous-répertoire racine des documents statiques
-  static_dir = 'client'
+  static_dir = 'TC3/TD2/client'
   
   def __init__(self, *args, **kwargs):
     """Surcharge du constructeur pour imposer 'client' comme sous répertoire racine"""
@@ -26,3 +26,4 @@ if __name__ == '__main__' :
     # instanciation et lancement du serveur
     httpd = socketserver.TCPServer(("", port_serveur), RequestHandler)
     httpd.serve_forever()
+
