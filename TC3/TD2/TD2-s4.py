@@ -95,9 +95,9 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
 # Programme principal
 if __name__ == '__main__' :
     # ouverture d'une connexion avec la base de données après vérification de sa présence
-    if not os.path.exists('ter.sqlite'):
+    if not os.path.exists('TC3/TD2/client/ter.sqlite'):
         raise FileNotFoundError("BD ter.sqlite non trouvée !")
-    conn = sqlite3.connect('ter.sqlite')
+    conn = sqlite3.connect('TC3/TD2/client/ter.sqlite')
     
     # instanciation et lancement du serveur
     httpd = socketserver.TCPServer(("", port_serveur), RequestHandler)
