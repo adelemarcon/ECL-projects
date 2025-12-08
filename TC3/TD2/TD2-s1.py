@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-CORRIGE du TD2-s1.py
-
-@author: Ecole Centrale de Lyon, 2025
-"""
 
 import http.server
 import socketserver
