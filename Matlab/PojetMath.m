@@ -60,6 +60,10 @@ w22 = 0;
 W = [w11, w12 ; w21, w22];
 B = [0.5; 0.5];
 
+lambda1 = 0.1;
+lambda2 = 1;
+lambda3 = 10;
+
 Phi1 =  @(x) max(0,x);
 
 ed1 = @(t1, s1) -lambda1 * s1 + Phi1(W * s1 + B);
