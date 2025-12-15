@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>TD3-s5.html</title>
+<link rel="stylesheet" type="text/css" href="style.css"/>
+
+<h1>Régularité des TER</h1>
+
+<div>
+<label><span>Région :</span><input id="region" name="Region"></label>
+<label><span> </span><button id="bouton">Afficher la courbe</button></label>
+</div>
+<p />
+<div id="reponse"></div>
+
+<script>
+document.getElementById('bouton').addEventListener('click', envoiformulaire);
+
+function envoiformulaire(e) {
+    var xhr = new XMLHttpRequest(); 
+    var reg = document.getElementById('region').value;
+    xhr.onload = function() {   // fonction callback
+        // affichage dans la zone 'reponse' du code HTML retourné
+        document.getElementById('reponse').innerHTML = this.responseText;
+        };
+
+	xhr.open('GET','/ponctualite/'+reg,true);  // requête au serveur
+    xhr.send();
+}
+</script>
+
+

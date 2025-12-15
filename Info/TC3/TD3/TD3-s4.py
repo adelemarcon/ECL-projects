@@ -75,13 +75,19 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
 
 
   def send_toctoc(self):
-    """Génèrer une réponse en HTML contenant le nom et prénom passés dans la chaine de requête"""
-    
-    body = f'<!DOCTYPE html> <title>{self.path_info[0]}</title> <meta charset="utf-8">' \
-         + f'<p>Bonjour {self.params['Prenom'][0]} {self.params['Nom'][0]}</p>'
-    headers = [('Content-Type','text/html;charset=utf-8')]
-    self.send(body,headers)
+    """Génèrer une réponse sous forme d'un objet JSON contenant le nom et prénom"""
 
+    # on construit une chaîne de caractère json à partir d'un dict python
+    # version RESTful utilisant le chemin de l'URL
+    body = json.dumps({
+      'given_name': self.path_info[1], \
+      'family_name': self.path_info[2] \
+      });
+    
+    # on envoie
+    headers = [('Content-Type','application/json')];
+    self.send(body,headers)
+            
 
   def send_service(self):
     """Génèrer une réponse en HTML retournant les paramètres de la requâte à des fins de test"""
@@ -148,5 +154,5 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
 # Programme principal
 if __name__ == '__main__' :
     # instanciation et lancement du serveur
-    httpd = socketserver.TCPServer(("localhost", port_serveur), RequestHandler)
+    httpd = socketserver.TCPServer(("", port_serveur), RequestHandler)
     httpd.serve_forever()

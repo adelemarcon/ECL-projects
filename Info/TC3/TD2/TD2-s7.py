@@ -16,7 +16,7 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
   """"Classe dérivée pour traiter les requêtes entrantes du serveur"""
 
   # sous-répertoire racine des documents statiques
-  static_dir = 'TC3/TD2/client'
+  static_dir = 'TD2/client'
   
   def __init__(self, *args, **kwargs):
     """Surcharge du constructeur pour imposer 'client' comme sous répertoire racine"""
@@ -133,7 +133,7 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
     
     # génération de la courbe dans un fichier PNG
     fichier = 'courbe_ponctualite.png'
-    plt.savefig(f'TC3/TD2/client/{fichier}')
+    plt.savefig(f'TD2/client/{fichier}')
 
     body = f'<img src="/{fichier}?{self.date_time_string()}" alt="ponctualite {region}" width="100%">'
     
@@ -166,9 +166,9 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
 # Programme principal
 if __name__ == '__main__' :
     # ouverture d'une connexion avec la base de données après vérification de sa présence
-    if not os.path.exists('TC3/TD2/client/ter.sqlite'):
+    if not os.path.exists('TD2/client/ter.sqlite'):
         raise FileNotFoundError("BD ter.sqlite non trouvée !")
-    conn = sqlite3.connect('TC3/TD2/client/ter.sqlite')
+    conn = sqlite3.connect('TD2/client/ter.sqlite')
         
     # instanciation et lancement du serveur
     httpd = socketserver.TCPServer(("", port_serveur), RequestHandler)

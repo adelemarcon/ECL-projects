@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>TD3-s3.html</title>
+<link rel="stylesheet" type="text/css" href="style.css"/>
+
+<h1>Mon troisième formulaire</h1>
+
+<div>
+<label><span>Prénom :</span><input id="prenom" name="Prenom"></label>
+<label><span>Nom :</span><input id="nom" name="Nom"></label>
+<label><span> </span><button id="bouton">Envoyer</button></label>
+</div>
+<p id="reponse"></p>
+
+<script>
+document.getElementById('bouton').addEventListener('click', envoiformulaire);
+
+function envoiformulaire(e) {
+    var xhr = new XMLHttpRequest(); 
+    // on récupére le nom et le prénom saisis dans le formulaire
+    var pr = document.getElementById('prenom').value;
+    var no = document.getElementById('nom').value;
+    xhr.onload = function() {   // définition de la fonction callback
+        // récupération des données renvoyées par le serveur
+	    var data = JSON.parse(this.responseText);
+	    // affichage dans la zone 'reponse' du prénom et du nom récupéré par l'appel au serveur
+	    document.getElementById('reponse').innerHTML = 'Bonjour ' + data.given_name + ' ' + data.family_name;
+	    };
+    xhr.open('GET','/toctoc?'+'Prenom='+pr+'&'+'Nom='+no,true);  // requête au serveur avec une "query string"
+    xhr.send();
+    }
+</script>
+
+
