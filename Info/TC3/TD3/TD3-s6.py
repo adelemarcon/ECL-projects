@@ -133,7 +133,7 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
     ax.xaxis.set_tick_params(labelsize=10)
     
     # interrogation de la base de données pour les données de la région
-    c.execute("SELECT Date,`Tauxderégularité` FROM 'regularite-mensuelle-ter' WHERE Région=? ORDER BY Date", (region,))
+    c.execute("SELECT Date,`Taux de régularité` FROM 'regularite-mensuelle-ter' WHERE Région=? ORDER BY Date", (region,))
     r = c.fetchall()
     
     # axe des abscisses : recupération de la date et transformation en date au format python
@@ -151,13 +151,13 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
     plt.xlabel('Date')
     
     # génération de la courbe dans un fichier PNG paramétré par le nom de la région
-    fichier = f'courbes/ponctualite_{region}.png'
-    plt.savefig(f'client/{fichier}')
+    fichier = f'TD3/client/courbes/ponctualite_{region}.png'
+    plt.savefig(f'{fichier}')
 
     # réponse au format JSON
     body = json.dumps({
             'title': f'Régularité TER {region}', \
-            'img': f'/{fichier}'  \
+            'img': f'{fichier}'  \
              });
         
     # envoi de la réponse
@@ -219,9 +219,9 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
 # Programme principal
 if __name__ == '__main__' :
     # ouverture d'une connexion avec la base de données après vérification de sa présence
-    if not os.path.exists('ter.sqlite'):
+    if not os.path.exists('TD2/client/ter.sqlite'):
         raise FileNotFoundError("BD ter.sqlite non trouvée !")
-    conn = sqlite3.connect('ter.sqlite')
+    conn = sqlite3.connect('TD2/client/ter.sqlite')
         
     # instanciation et lancement du serveur
     httpd = socketserver.TCPServer(("", port_serveur), RequestHandler)

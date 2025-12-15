@@ -22,7 +22,7 @@ import matplotlib.dates as pltd
 # numéro du port TCP utilisé par le serveur
 port_serveur = 8080
 # nom de la base de données
-BD_name = "ter.sqlite"
+BD_name = "TD2/client/ter.sqlite"
 
 class RequestHandler(http.server.SimpleHTTPRequestHandler):
   """"Classe dérivée pour traiter les requêtes entrantes du serveur"""
@@ -134,7 +134,7 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
     ax.xaxis.set_tick_params(labelsize=10)
     
     # interrogation de la base de données pour les données de la région
-    c.execute("SELECT Date,`Tauxderégularité` FROM 'regularite-mensuelle-ter' WHERE Région=? ORDER BY Date", (region,))
+    c.execute("SELECT Date,`Taux de régularité` FROM 'regularite-mensuelle-ter' WHERE Région=? ORDER BY Date", (region,))
     r = c.fetchall()
 
     # axe des abscisses : recupération de la date et transformation en date au format python
