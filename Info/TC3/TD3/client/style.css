@@ -1,0 +1,55 @@
+﻿/* fond de page */
+body {
+  background-image: linear-gradient(0deg, slateblue, black, black);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  color: white;
+  height: 100vh;
+}
+
+/* bandeau de titre */
+h1 { 
+  color: white;
+  border: none;
+  box-shadow: none;
+  background-color: rgba(255,255,255,0.3);
+  border-top: 3px solid rgba(255,255,255,0.6);
+  border-bottom: 3px solid rgba(255,255,255,0.6);
+  margin-top: 1.33em;
+  margin-bottom: 1.33em;
+  text-shadow: 3px 3px 3px black;
+  padding: 0.5em;
+}
+
+/* polices de caractères */
+body { font-family: Trebuchet MS, sans-serif; }
+
+/* positionnement des champs */
+label { display: block; }
+label span { display: inline-block; width: 5em; height: 1.5em; }
+
+
+a.delete:hover {
+  color: red;
+}
+
+/* paramètres d'affichage du graphique */
+#reponse img { 
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+} 
+
+#reponse p { text-align:center; }
+
+/* Height et width sont indispensables pour l'affichage de la carte */
+#map { 
+  height: 400px; 
+  width: 360px; 
+  float:left; 
+  margin-left:5px; 
+  margin-right:10px; 
+  margin-bottom:10px; 
+}
+
