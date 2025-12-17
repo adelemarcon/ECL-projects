@@ -1,0 +1,330 @@
+%% Fonction logistique
+clear all;
+close all;
+clc;
+
+n = 2;
+N = 10;
+I = 1000;
+lambda = zeros(1,N);
+v= 0;
+for i=1:N
+    v = v + I/N;
+    lambda(i) = v;
+end
+
+b = 1;
+w11 = 0;
+w12 = 1;
+w21 = 1;
+w22 = 0;
+W = [w11, w12 ; w21, w22];
+B = [0.5; 0.5];
+s0 = [5 ; 10];
+
+Phi2 = @(x) 1 ./ (1 + exp(-b*x));
+
+ed = cell(1,N);
+s = cell(1,N);
+t = cell(1,N);
+tspan = [0 0.1];
+for i=1:N
+    ed{i} = @(t,s) -lambda(i) * s + Phi2(W * s + B);
+    [t{i}, s{i}] = ode45(ed{i}, tspan, s0);
+end
+
+figure('Position', [100 100 1400 500]);
+
+for i = 1:N
+    plot(t{1,i}, s{i}, 'LineWidth', 2);
+    xlabel('Temps (t)', 'FontSize', 12);
+    ylabel('États s_i(t)', 'FontSize', 12);
+    grid on;
+    legend(['s_1' num2str(i) '(t)'],['s_2' num2str(i) '(t)'], 'Location', 'best', 'FontSize', 11);
+    hold on
+end
+
+hold off
+
+%% Fonction positive
+clear all;
+close all;
+clc;
+
+n = 2;
+b = 1;
+w11 = 0;
+w12 = 1;
+w21 = 1;
+w22 = 0;
+W = [w11, w12 ; w21, w22];
+B = [0.5; 0.5];
+
+lambda1 = 0.1;
+lambda2 = 1;
+lambda3 = 10;
+
+Phi1 =  @(x) max(0,x);
+
+ed1 = @(t1, s1) -lambda1 * s1 + Phi1(W * s1 + B);
+ed2 = @(t2, s2) -lambda2 * s2 + Phi1(W * s2 + B);
+ed3 = @(t3, s3) -lambda3 * s3 + Phi1(W * s3 + B);
+s0 = [0 ; 10];
+tspan = [0 2];
+
+[t1, s1] = ode45(ed1, tspan, s0);
+[t2, s2] = ode45(ed2, tspan, s0);
+[t3, s3] = ode45(ed3, tspan, s0);
+
+figure('Position', [100 100 1400 500]);
+
+% Graphique 1
+subplot(1, 3, 1);
+plot(t1, s1, 'LineWidth', 2);
+xlabel('Temps (t)', 'FontSize', 12);
+ylabel('États s_i(t)', 'FontSize', 12);
+grid on;
+legend('s_1(t)', 's_2(t)', 'Location', 'best', 'FontSize', 11);
+
+% Graphique 2
+subplot(1, 3, 2);
+plot(t2, s2, 'LineWidth', 2);
+xlabel('Temps (t)', 'FontSize', 12);
+ylabel('États s_i(t)', 'FontSize', 12);
+grid on;
+legend('s_1(t)', 's_2(t)', 'Location', 'best', 'FontSize', 11);
+
+
+% Graphique 3
+subplot(1, 3, 3);
+plot(t3, s3, 'LineWidth', 2);
+xlabel('Temps (t)', 'FontSize', 12);
+ylabel('États s_i(t)', 'FontSize', 12);
+grid on;
+legend('s_1(t)', 's_2(t)', 'Location', 'best', 'FontSize', 11);
+
+%% QUESTION 1
+
+clear all;
+close all;
+clc;
+
+% Choix de la fonction
+Phi =  @(x) max(0,x);
+
+
+function [t, s] = euler(W, B, s0, lambda, tspan)
+    Phi =  @(x) max(0,x);
+
+    N = 1000;
+    pas = tspan(2)/N;
+
+    f = @(t, s) -lambda * s + Phi(W * s + B);  % equation 
+
+    t = zeros(N + 1, 1);
+    s = zeros(N + 1, 2);
+
+    t(1) = tspan(1);
+    s(1, :) = s0;
+    
+    % Euler 
+    for i = 1:N
+        f_i = f(t(i), s(i, :)'); 
+        
+        s(i+1, :) = s(i, :) + pas * f_i'; 
+        
+        t(i+1) = t(i) + pas;
+    end
+end
+
+
+
+tracer;
+
+function tracer
+
+    fig = uifigure('Name', 'Tracé', 'Position', [100, 100, 1000, 800]);
+    
+    %%% Partie création des sliders %%%
+
+    % Lambda
+    lambda = uislider(fig,...
+                 'Position',[120 40 300 3],...
+                 'Limits',[0 20],...
+                 'Value',2,...
+                 'ValueChangedFcn',@maj_lambda);
+    label_lambda = uilabel(fig, 'Position', [20 30 80 22], ...
+                 'Text', ['lambda = ' num2str(lambda.Value)]);
+    
+    % Conditions initiales 
+    s_01 = uislider(fig,...
+                 'Position',[120 240 300 3],...
+                 'Limits',[0 30],...
+                 'Value',1,...
+                 'ValueChangedFcn',@maj_s_01);
+    label_s_01 = uilabel(fig, 'Position', [20 230 80 22], ...
+                 'Text', ['s_01 = ' num2str(s_01.Value)]);
+    s_02 = uislider(fig,...
+                 'Position',[120 190 300 3],...
+                 'Limits',[0 30],...
+                 'Value',1,...
+                 'ValueChangedFcn',@maj_s_02);
+    label_s_02 = uilabel(fig, 'Position', [20 180 80 22], ...
+                 'Text', ['s_02 = ' num2str(s_02.Value)]);
+    
+    % Conditions extérieures
+    B1 = uislider(fig,...
+                 'Position',[120 140 300 3],...
+                 'Limits',[0 30],...
+                 'Value',1,...
+                 'ValueChangedFcn',@maj_B1);
+    label_B1 = uilabel(fig, 'Position', [20 130 80 22], ...
+                 'Text', ['B1 = ' num2str(B1.Value)]);
+    B2 = uislider(fig,...
+                 'Position',[120 90 300 3],...
+                 'Limits',[0 30],...
+                 'Value',1,...
+                 'ValueChangedFcn',@maj_B2);
+    label_B2 = uilabel(fig, 'Position', [20 80 80 22], ...
+                 'Text', ['B2 = ' num2str(B2.Value)]);
+
+    % La matrice W
+    w11 = uislider(fig,...
+                 'Position',[600 240 300 3],...
+                 'Limits',[0 30],...
+                 'Value',1,...
+                 'ValueChangedFcn',@maj_w11);
+    label_w11 = uilabel(fig, 'Position', [500 230 80 22], ...
+                 'Text', ['w11 = ' num2str(w11.Value)]);
+
+    w12 = uislider(fig,...
+                 'Position',[600 190 300 3],...
+                 'Limits',[0 30],...
+                 'Value',1,...
+                 'ValueChangedFcn',@maj_w12);
+    label_w12 = uilabel(fig, 'Position', [500 180 80 22], ...
+                 'Text', ['w12 = ' num2str(w12.Value)]);
+
+    w21 = uislider(fig,...
+                 'Position',[600 140 300 3],...
+                 'Limits',[0 30],...
+                 'Value',1,...
+                 'ValueChangedFcn',@maj_w21);
+    label_w21 = uilabel(fig, 'Position', [500 130 80 22], ...
+                 'Text', ['w21 = ' num2str(w21.Value)]);
+
+    w22 = uislider(fig,...
+                 'Position',[600 90 300 3],...
+                 'Limits',[0 30],...
+                 'Value',1,...
+                 'ValueChangedFcn',@maj_w22);
+    label_w22 = uilabel(fig, 'Position', [500 80 80 22], ...
+                 'Text', ['w22 = ' num2str(w22.Value)]);
+
+    
+    %%% Initialisation %%%
+
+    ax = uiaxes(fig,'Position',[20 270 750 500]);
+
+    W = [w11.Value, w12.Value ; w21.Value, w22.Value];
+    
+    B = [B1.Value; B2.Value];
+    
+    s0 = [s_01.Value; s_02.Value];
+
+    tspan = [0 10];
+    
+    [t, s] = euler(W, B, s0, lambda.Value, tspan);
+
+    plot(ax, t, s, 'LineWidth', 2);
+    xlabel(ax, 'Temps (t)', 'FontSize', 12);
+    ylabel(ax, 'États s_i(t)', 'FontSize', 12);    
+    ax.XGrid = 'on';
+    ax.YGrid = 'on';
+    legend(ax,'s_1(t)', 's_2(t)', 'Location', 'best', 'FontSize', 11);
+    title(ax,'Modélisation de l''activité électrique du cerveau');
+
+
+    %%% Partie mise à jour des courbes %%%
+
+    % Lambda
+    function maj_lambda(src, event)
+        l = event.Value;
+        [t, s] = euler(W, B, s0, lambda.Value, tspan);
+        plot(ax, t, s, 'LineWidth', 2);
+        label_lambda.Text = ['lambda = ' num2str(l)];
+        legend(ax,'s_1(t)', 's_2(t)', 'Location', 'best', 'FontSize', 11);
+        title(ax,'Modélisation de l''activité électrique du cerveau');
+    end
+    
+    % Conditions initiales
+    function maj_s_01(src, event)
+        s0 = [event.Value; s_02.Value];
+        [t, s] = euler(W, B, s0, lambda.Value, tspan);
+        plot(ax, t, s, 'LineWidth', 2);
+        label_s_01.Text = ['s_01 = ' num2str(event.Value)];
+        legend(ax,'s_1(t)', 's_2(t)', 'Location', 'best', 'FontSize', 11);
+        title(ax,'Modélisation de l''activité électrique du cerveau');
+    end
+    function maj_s_02(src, event)
+        s0 = [s_01.Value; event.Value];
+        [t, s] = euler(W, B, s0, lambda.Value, tspan);
+        plot(ax, t, s, 'LineWidth', 2);
+        label_s_02.Text = ['s_02 = ' num2str(event.Value)];
+        legend(ax,'s_1(t)', 's_2(t)', 'Location', 'best', 'FontSize', 11);
+        title(ax,'Modélisation de l''activité électrique du cerveau');
+    end
+    
+    % Conditions extérieures
+    function maj_B1(src, event)
+        B = [event.Value; B2.Value];
+        [t, s] = euler(W, B, s0, lambda.Value, tspan);
+        plot(ax, t, s, 'LineWidth', 2);
+        label_B1.Text = ['B1 = ' num2str(event.Value)];
+        legend(ax,'s_1(t)', 's_2(t)', 'Location', 'best', 'FontSize', 11);
+        title(ax,'Modélisation de l''activité électrique du cerveau');
+    end
+    function maj_B2(src, event)
+        B = [B1.Value; event.Value];
+        [t, s] = euler(W, B, s0, lambda.Value, tspan);
+        plot(ax, t, s, 'LineWidth', 2);
+        label_B2.Text = ['B2 = ' num2str(event.Value)];
+        legend(ax,'s_1(t)', 's_2(t)', 'Location', 'best', 'FontSize', 11);
+        title(ax,'Modélisation de l''activité électrique du cerveau');
+    end
+
+    % la matrice W
+    function maj_w11(src, event)
+        W = [event.Value, w12.Value ; w21.Value, w22.Value];
+        [t, s] = euler(W, B, s0, lambda.Value, tspan);
+        plot(ax, t, s, 'LineWidth', 2);
+        label_w11.Text = ['w11 = ' num2str(event.Value)];
+        legend(ax,'s_1(t)', 's_2(t)', 'Location', 'best', 'FontSize', 11);
+        title(ax,'Modélisation de l''activité électrique du cerveau');
+    end
+    function maj_w12(src, event)
+        W = [w11.Value, event.Value ; w21.Value, w22.Value];
+        [t, s] = euler(W, B, s0, lambda.Value, tspan);
+        plot(ax, t, s, 'LineWidth', 2);
+        label_w12.Text = ['w12 = ' num2str(event.Value)];
+        legend(ax,'s_1(t)', 's_2(t)', 'Location', 'best', 'FontSize', 11);
+        title(ax,'Modélisation de l''activité électrique du cerveau');
+    end
+    function maj_w21(src, event)
+        W = [w11.Value, w12.Value ; event.Value, w22.Value];
+        [t, s] = euler(W, B, s0, lambda.Value, tspan);
+        plot(ax, t, s, 'LineWidth', 2);
+        label_w21.Text = ['w21 = ' num2str(event.Value)];
+        legend(ax,'s_1(t)', 's_2(t)', 'Location', 'best', 'FontSize', 11);
+        title(ax,'Modélisation de l''activité électrique du cerveau');
+    end
+    function maj_w22(src, event)
+        W = [w11.Value, w12.Value ; w21.Value, event.Value];
+        [t, s] = euler(W, B, s0, lambda.Value, tspan);
+        plot(ax, t, s, 'LineWidth', 2);
+        label_w22.Text = ['w22 = ' num2str(event.Value)];
+        legend(ax,'s_1(t)', 's_2(t)', 'Location', 'best', 'FontSize', 11);
+        title(ax,'Modélisation de l''activité électrique du cerveau');
+    end
+
+end
