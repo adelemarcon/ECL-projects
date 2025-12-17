@@ -31,7 +31,7 @@ figure(3);
 semilogy(nun,Yest);
 xlabel('Fréquence (Hz)');
 ylabel('fft(yk)');
-title('Transformée de Fourier');
+title('Transformée de Fourier - logarithmique');
 grid on;
 
 T0 = 1/84;
@@ -62,9 +62,10 @@ figure(6);
 semilogy(nun1,Yest1);
 xlabel('Fréquence (Hz)');
 ylabel('fft(yk)');
-title('Transformée de Fourier de la fonction motif');
+title('Transformée de Fourier de la fonction motif - logarithmique');
 grid on;
-
+%%
+sound(yk,nus)
 %%
 figure(7)
 
@@ -139,51 +140,45 @@ subplot(1,2,2)
 spectrogram(ysynth ,Nw,Nw/3,2*Nw,nus,'yaxis');
 
 %%
-duree_fenetre = 30e-3;
-decalage = 10e-3;
 
-N_fenetre = round(duree_fenetre * nus);
-N_decalage = round(decalage * nus);
-
-fenetre = hanning(N_fenetre);
-N_signal = length(xk);
-
-N_trames = floor((N_signal - N_fenetre) / N_decalage) + 1;
-
-NFFT = 2^nextpow2(N_fenetre);
-spectrogramme = zeros(NFFT/2 + 1, N_trames);
-
-temps = ((0:N_trames-1) * N_decalage + N_fenetre/2) / nus;
-freqs = (0:NFFT/2) * nus / NFFT;
-for k = 1:N_trames
-    % Extraction de la trame
-    debut = (k-1) * N_decalage + 1;
-    fin = debut + N_fenetre - 1;
-    
-    if fin <= N_signal
-        trame = xk(debut:fin);
-        trame_fenetree = trame(:) .* fenetre(:);
-        fft_trame = fft(trame_fenetree, NFFT);
-        spectrogramme(:, k) = abs(fft_trame(1:NFFT/2+1)).^2;
-    end
+Tw_analyse = 0.03; % 30 msec - durée de la fenêtre d'analyse
+decalage = 0.01; % 10 msec - décalage entre fenêtres
+Nw_analyse = round(Tw_analyse / Ts); % Nombre d'échantillons par fenêtre
+Ndecalage = round(decalage / Ts); % Décalage en échantillons
+fenetre_hanning = hanning(Nw_analyse); % fenetre de Hanning
+ysynt_tv = zeros(1, N); %initialise le vecteur tempsvariant
+% Boucle
+debut = 1;
+while debut + Nw_analyse - 1 <= N % principe de construction spectrogramme
+   segment = yk(debut : debut + Nw_analyse - 1);
+  
+   segment_fenetre = segment(:) .* fenetre_hanning;
+  
+   [b0_local, a_local] = myaryule(segment_fenetre, na, 'det');
+  
+   xk_local = zeros(Nw_analyse, 1);
+   indices_imp = 1:N0:Nw_analyse;
+   xk_local(indices_imp) = 1;
+  
+   segment_synt = filter(b0_local, a_local, xk_local);
+  
+   segment_synt = segment_synt .* fenetre_hanning;
+  
+   ysynt_tv(debut : debut + Nw_analyse - 1) = ...
+       ysynt_tv(debut : debut + Nw_analyse - 1) + segment_synt';
+  
+   debut = debut + Ndecalage;
 end
+ysynt_tv = ysynt_tv / max(abs(ysynt_tv)); % normalisation
 figure(11)
-% Conversion en dB
-spectrogramme_dB = 10*log10(spectrogramme + eps); % eps pour éviter log(0)
+subplot(1,3,1)
+yk_col = yk(:);
+spectrogram(yk_col, Nw, Nw/3, 2*Nw, nus, 'yaxis');
+title('Spectrogramme du signal original');
+subplot(1,3,3)
+ysynt_tv_col = ysynt_tv(:);
+spectrogram(ysynt_tv_col, Nw, Nw/3, 2*Nw, nus, 'yaxis');
+title('Spectrogramme - Synthèse temps-variant (fenêtre 30ms, décalage 10ms)');
 
-% Affichage avec imagesc
-imagesc(temps, freqs/1000, spectrogramme_dB);
-axis xy;  % Origine en bas à gauche
-colorbar;
-xlabel('Temps (s)', 'FontSize', 12);
-ylabel('Fréquence (kHz)', 'FontSize', 12);
-title('Spectrogramme - Méthode de synthèse nominale', 'FontSize', 14);
-colormap('jet');
-caxis([max(spectrogramme_dB(:))-60, max(spectrogramme_dB(:))]); % Dynamique de 60 dB
-
-% Ajout d'une grille
-grid on;
-set(gca, 'FontSize', 11);
-
-%%
-
+subplot(1,3,2)
+spectrogram(ysynth ,Nw,Nw/3,2*Nw,nus,'yaxis');
