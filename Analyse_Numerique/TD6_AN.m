@@ -62,3 +62,45 @@ plot(log10(lN),log10(Err2))
 grid on
 xlabel('log_ {10}( N)')
 ylabel('log_ {10}( Erreur )')
+
+%% Exercice 4
+clear all; close all; clc;
+
+figure(1)
+Alpha = [10,20,30,40,50];
+for a=1:length(Alpha)
+    alpha = Alpha(a);
+    N = 100;
+    h = 1/(N+1);
+    X = zeros(N,1);
+    un = ones(N-1,1);
+    A = ((2)*eye(N,N) -diag(un,1) -diag(un,-1))/(h^2);
+    for i=1:N
+        X(i) = i*h;
+    end
+    
+    f = @(x) (pi^2)*x.*sin(pi*x) -2*pi*cos(pi*x) +alpha*(x.*sin(pi*x)).^3;
+    u = @(x) x.*sin(pi*x);
+    F = zeros(N,1);
+    Ur = zeros(N,1);
+    for i=1:N
+        F(i) = f(X(i));
+        Ur(i) = u(X(i));
+    end
+    
+    U = zeros(N,1);
+    U = A\F;
+    
+    for j=2:N
+        U_cube = U.^3;
+        U = A\(F-alpha.*(U_cube));
+    end
+    
+    clc
+    plot(X,U)
+    hold on
+    plot(X,Ur)
+    hold off
+    legend('Courbe approximée','Courbe réelle')
+    pause(1.5)
+end
