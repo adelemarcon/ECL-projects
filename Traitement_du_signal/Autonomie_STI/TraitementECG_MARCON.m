@@ -64,18 +64,27 @@ title('Éstimation discrete du spectre du signal analogique avec fenêtrage tempor
 % Question 3/4 : analyse du signal bruit seul
 
 load bruit
-bstar = b;
+[DSP, f] = pwelch(b);
+f_bilateral = [-flipud(f(2:end)); f]; % fréquences négatives + positives
+DSP_bilateral = [flipud(DSP(2:end)); DSP]; % DSP symétrique
 
-B = abs(fft(bstar)); % Calcul du module de la TF du signal aléatoire b échantilloné
-Best = Ts*[B(N/2+1:end) B(1:N/2)]; % Reconstruction du module de la TF du signal b
+[DSP_y, f_y] = pwelch(y);
+f_bilateral_y = [-flipud(f_y(2:end)); f_y]; % fréquences négatives + positives
+DSP_bilateral_y = [flipud(DSP_y(2:end)); DSP_y]; % DSP symétrique
 
-Sb = (Best.^2)/Ts; % Calcul de la densité spectrale de puissance du signal b à partir de celle de bstar
 figure(3)
-plot(nun,Sb);
+plot(f_bilateral, DSP_bilateral);
 xlabel('fréquence (Hz)');
-ylabel('Sb(\nu)');
+ylabel('DSP de b');
 grid on;
 title('Densité spectrale de puissance du bruit b');
+
+figure(4)
+plot(f_bilateral_y, DSP_bilateral_y)
+xlabel('fréquence (Hz)');
+ylabel('DSP de y');
+grid on;
+title('Densité spectrale de puissance de y');
 
 fprintf('\n------Réponse à la Question 5------\n')
 fprintf('Ces représentations temporelles et fréquentielles permettent de voir que le bruit b a un impact plutôt dans les hautes fréquences sur le signal y\n')
@@ -91,7 +100,7 @@ YMstar = M*[Yn(1:N/2), zeros(1,(M-1)*N), Yn(N/2+1:N)];
 yMstar = ifft(YMstar);
 t = [0:M*N-1]*Ts/M;
 
-figure(4)
+figure(5)
 plot(T,ystar);
 hold on;
 plot(t, yMstar);
@@ -145,7 +154,7 @@ z = conv(y,hk,'same');
 Z = abs(fft(z));
 Zest = Ts*[0,flip(Z(2:end)),Z];
 
-figure(5)
+figure(6)
 % Signal original et filtré (domaine temporel)
 subplot(2,1,1);
 plot(T, ystar);
@@ -183,7 +192,7 @@ ZM = M*[Zn(1:N/2), zeros(1,(M2-1)*N), Zn(N/2+1:N)];
 zM = ifft(ZM);
 t = [0:M2*N-1]*Ts/M2;
 
-figure(6)
+figure(7)
 plot(T,z);
 hold on;
 plot(t, zM);
@@ -227,7 +236,7 @@ sequenceRTz = (TofT-TofR)*(Ts/M);
 
 k = [1:25];
 
-figure(7)
+figure(8)
 plot(k,sequenceRTy, 'r', 'LineWidth', 1.5);
 hold on;
 plot(k,sequenceRTz, 'b--', 'LineWidth', 1.5);
@@ -281,7 +290,7 @@ freq_std_z = std(freq_cardiaque_bpm_z);
 
 k = [1:length(freq_cardiaque_y)];
 
-figure(8)
+figure(9)
 subplot(211)
 plot(k,freq_cardiaque_bpm_y, 'r', 'LineWidth', 1.5);
 hold on;
