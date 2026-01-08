@@ -1,0 +1,25 @@
+Circuit: * C:\Users\ngila\Documents\Cours\STI\TC1_Electronique\Autonomie\STI_TC1_Auto_6-Mealy.asc
+
+Warning: Multiple definitions of model "nmos_12" Type: EKV
+Warning: Multiple definitions of model "pmos_12" Type: EKV
+WARNING: Less than two connections to node Z.  This node is used by A4.
+Direct Newton iteration for .op point succeeded.
+
+Date: Sun Dec 14 15:19:54 2025
+Total elapsed time: 12.080 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 217732
+traniter = 217698
+tranpoints = 101059
+accept = 100844
+rejected = 215
+matrix size = 65
+fillins = 10
+solver = Normal
+Thread vector: 72.5/21.7[5] 22.9/16.7[5] 3.2/7.4[1] 0.2/7.8[1]  2592/500
+Matrix Compiler1: 4.03 KB object code size  2.9/2.4/[0.9]
+Matrix Compiler2: 5.77 KB object code size  2.0/3.7/[0.9]
+

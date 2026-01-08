@@ -1,0 +1,21 @@
+Circuit: * C:\Users\ngila\Documents\Cours\STI\TC1_Electronique\Autonomie\STI_TC1_Auto_4-NE55-2.asc
+
+Direct Newton iteration for .op point succeeded.
+
+Date: Tue Dec 16 14:42:43 2025
+Total elapsed time: 3.266 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 200564
+traniter = 200556
+tranpoints = 100212
+accept = 100191
+rejected = 21
+matrix size = 15
+fillins = 0
+solver = Normal
+Matrix Compiler1: 416 bytes object code size  0.3/0.2/[0.2]
+Matrix Compiler2: 783 bytes object code size  0.2/0.3/[0.1]
+
