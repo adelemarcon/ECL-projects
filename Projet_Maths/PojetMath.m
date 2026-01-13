@@ -40,8 +40,8 @@ for i = 1:N
     xlabel('Temps (t)', 'FontSize', 12);
     ylabel('États s_i(t)', 'FontSize', 12);
     grid on;
-    legend(['s_1' num2str(i) '(t)'],['s_2' num2str(i) '(t)'], 'Location', 'best', 'FontSize', 11);
     hold on
+    legend(['s_1' num2str(i) '(t)'],['s_2' num2str(i) '(t)'], 'Location', 'best', 'FontSize', 11);
 end
 
 hold off
